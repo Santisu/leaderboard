@@ -19,7 +19,11 @@ class Activity(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def is_not_active(self):
+        return not self.is_active
 
+    
 
 class UserActivity(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
