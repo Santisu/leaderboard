@@ -115,14 +115,10 @@ class TrainingService():
             return True
         return False
 
-class LeaderboardService():
-    activity_service = ActivityService()
-    
-    def retrieve_leaderboard_by_activity(self, request, activity_id):
+class LeaderboardService():    
+    def retrieve_leaderboard_by_activity(self, request, activity_id) -> dict[str, dict]:
         activity = Activity.objects.get(id=activity_id)
         top_activities = UserActivityLog.objects.filter(user_activity__activity__id=activity_id).order_by('-score')[:5]
-        for top_activity in top_activities:
-            print(top_activity.user_activity)
         return {
             "activity": ActivitySerializer(activity).data,
             "top_users": UserActivityLogSerializer(top_activities, many=True).data
